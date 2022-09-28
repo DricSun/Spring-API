@@ -103,7 +103,7 @@ public class EmployeeService {
         return minSalaryByCategory;
     }
     // augmentation salaire , diminution salaire en % des employees par catégories
-    public void variationSalaryAugmentation(EmployeeCategory employeeCategory, double augmentationSalaryPourcentage){
+    public void variationSalary(EmployeeCategory employeeCategory, double augmentationSalaryPourcentage){
 
         Iterable<Employee> listeEmployee = getEmployeesByCategory(employeeCategory);
 
@@ -116,25 +116,11 @@ public class EmployeeService {
             employee.setSalary(calculAugmentation);
         }
 
-       
+        //diminution salary
+        variationSalary(employeeCategory, -2);
         
     }
 
-    public void variationSalaryDiminution(EmployeeCategory employeeCategory, double augmentationSalaryPourcentage){
-        
-        Iterable<Employee> listeEmployee = getEmployeesByCategory(employeeCategory);
-
-        for(Employee employee : listeEmployee){
-
-            double employeeSalary = employee.getSalary();
-            
-            double calculDiminution = employeeSalary * (100 - augmentationSalaryPourcentage) /100;
-            
-            employee.setSalary(calculDiminution);
-        }
-
-        
-    }
 
 
 
