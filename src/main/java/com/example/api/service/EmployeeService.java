@@ -72,7 +72,7 @@ public class EmployeeService {
     }
 
     //obtenir le salaire max d'un employee par catégorie 
-     public double getMaxSalarybyCategory( EmployeeCategory employeeCategory){
+    public double getMaxSalarybyCategory( EmployeeCategory employeeCategory){
 
         Iterable<Employee> listeEmployee = getEmployeesByCategory(employeeCategory);
         //prendre le prmeier element du tableau 
@@ -102,10 +102,41 @@ public class EmployeeService {
 
         return minSalaryByCategory;
     }
+    // augmentation salaire , diminution salaire en % des employees par catégories
+    public void variationSalaryAugmentation(EmployeeCategory employeeCategory, double augmentationSalaryPourcentage){
 
-    public double variationSalary(EmployeeCategory employeeCategory){
+        Iterable<Employee> listeEmployee = getEmployeesByCategory(employeeCategory);
 
+        for(Employee employee : listeEmployee){
+
+            double employeeSalary = employee.getSalary();
+            
+            double calculAugmentation = employeeSalary * (100 + augmentationSalaryPourcentage) /100;
+            
+            employee.setSalary(calculAugmentation);
+        }
+
+       
+        
     }
+
+    public void variationSalaryDiminution(EmployeeCategory employeeCategory, double augmentationSalaryPourcentage){
+        
+        Iterable<Employee> listeEmployee = getEmployeesByCategory(employeeCategory);
+
+        for(Employee employee : listeEmployee){
+
+            double employeeSalary = employee.getSalary();
+            
+            double calculDiminution = employeeSalary * (100 - augmentationSalaryPourcentage) /100;
+            
+            employee.setSalary(calculDiminution);
+        }
+
+        
+    }
+
+
 
     public void updateSalary(long id, double salary){
         
