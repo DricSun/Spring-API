@@ -1,4 +1,4 @@
-package com.example.api.model;
+package com.example.Employee.api.model;
 
 
 public enum EmployeeCategory {

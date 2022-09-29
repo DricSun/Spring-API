@@ -1,4 +1,4 @@
-package com.example.api.model;
+package com.example.Employee.api.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,16 +9,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+// import org.springframework.data.annotation.Transient;
+
 import lombok.Data;
 
 @Data // Permet d'importer Lombok pas besoin de getter et setter
 @Entity // Indique que la classe Employee est une entité en BDD
-@Table(name = "employees") // Indique le nom de la table associées en BDD
+@Table( name = "employees") // Indique le nom de la table associées en BDD
 public class Employee {
 
-    @Id
+    @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    // @Transient
+    // private UUID corrId = UUID.randomUUID();
 
     @Column(name = "first_name")
     private String firstName;
@@ -33,7 +37,12 @@ public class Employee {
     private double salary;
 
     @Enumerated(EnumType.STRING)
-    private EmployeeCategory category;
+    private EmployeeCategory category = EmployeeCategory.CATEGORYA;
+
+    //besoin d'un construvcteur par defaut
+    public Employee(){
+
+    }
 
 
     public Employee(String firstName, String lastName, String email, String password, double salary, EmployeeCategory employeeCategory) {
@@ -45,7 +54,4 @@ public class Employee {
         this.category = employeeCategory;
     }
 
-    public void print(){
-        System.out.println(this.firstName + this.lastName);
-    }
 }

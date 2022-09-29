@@ -1,4 +1,4 @@
-package com.example.api.service;
+package com.example.Employee.api.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,10 +6,10 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.api.model.Employee;
-import com.example.api.model.EmployeeCategory;
-import com.example.api.repository.EmployeeRepository;
 
+import com.example.Employee.api.model.Employee;
+import com.example.Employee.api.model.EmployeeCategory;
+import com.example.Employee.api.repository.EmployeeRepository;
 
 import lombok.Data;
 
