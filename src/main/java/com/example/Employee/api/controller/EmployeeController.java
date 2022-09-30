@@ -18,6 +18,7 @@ import com.example.Employee.api.model.Employee;
 import com.example.Employee.api.model.EmployeeCategory;
 import com.example.Employee.api.service.EmployeeService;
 
+
 @RestController
 public class EmployeeController {
 
@@ -62,9 +63,9 @@ public class EmployeeController {
     }
     
     @PutMapping("employees/{id}")
-     public void updateSalary(@RequestParam double salary, @PathVariable long id){
+     public void updateSalary(@PathVariable long id , @RequestParam double salary){
          employeeService.updateSalary(id, salary);
-        
+            
     }
 
 }

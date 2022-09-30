@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +13,7 @@ import com.example.Employee.api.model.Employee;
 import com.example.Employee.api.model.EmployeeCategory;
 import com.example.Employee.api.repository.EmployeeRepository;
 
-import lombok.Data;
 
-@Data // Permet d'accéeder au données de la bdd
 @Service
 public class EmployeeService {
 
@@ -126,11 +126,21 @@ public class EmployeeService {
 
     public void updateSalary(long id, double salary){
         
+        
         Optional<Employee> optionnalEmployee = getEmployee(id);
         // si jamais un employe a ete trouver (optionnal pas vide) on execute
-        optionnalEmployee.ifPresent(employee -> employee.setSalary(salary));
+       if(optionnalEmployee.isPresent()){
+        // .get() permet d avoir l'objt stocké dans l'optionnal
+            Employee employee = optionnalEmployee.get();
+            employee.setSalary(salary);
+            // mettre a jour l'objet en base 
+            employeeRepository.save(employee);
+       }else{
 
+       }
         
+
+
     }
 
 
