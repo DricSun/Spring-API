@@ -3,8 +3,7 @@ package com.example.Employee.api.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,15 +13,18 @@ import com.example.Employee.api.model.EmployeeCategory;
 import com.example.Employee.api.repository.EmployeeRepository;
 
 
+
 @Service
 public class EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
 
+  
+
     // Optional peut renvoyer ou non 
-    public Optional<Employee> getEmployee(final Long id) {
-        return employeeRepository.findById(id);
+    public Optional<Employee> getEmployee(final UUID uuid) {
+        return employeeRepository.findOneByUuid(uuid);
     }
     //fonction qui permet d'obtenir la liste d'employee par catégories
     public Iterable<Employee> getEmployeesByCategory(EmployeeCategory employeecategory){
@@ -43,8 +45,8 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
-    public void deleteEmployee(final Long id) {
-        employeeRepository.deleteById(id);
+    public void deleteEmployee(final UUID uuid) {
+        employeeRepository.deleteEmployeeByUuid(uuid);
     }
 
     public Employee saveEmployee(Employee employee) {
@@ -124,10 +126,10 @@ public class EmployeeService {
 
 
 
-    public void updateSalary(long id, double salary){
+    public void updateSalary(UUID uuid, double salary){
         
         
-        Optional<Employee> optionnalEmployee = getEmployee(id);
+        Optional<Employee> optionnalEmployee = getEmployee(uuid);
         // si jamais un employe a ete trouver (optionnal pas vide) on execute
        if(optionnalEmployee.isPresent()){
         // .get() permet d avoir l'objt stocké dans l'optionnal
@@ -136,7 +138,7 @@ public class EmployeeService {
             // mettre a jour l'objet en base 
             employeeRepository.save(employee);
        }else{
-
+        
        }
         
 

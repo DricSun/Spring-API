@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 // import org.springframework.data.annotation.Transient;
 
@@ -24,7 +25,9 @@ public class Employee {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Type(type="org.hibernate.type.UUIDCharType")
     private UUID uuid = UUID.randomUUID();
+    
 
     @Column(name = "first_name")
     private String firstName;

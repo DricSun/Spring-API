@@ -1,6 +1,7 @@
 package com.example.Employee.api.controller;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,11 +19,11 @@ import com.example.Employee.api.model.Employee;
 import com.example.Employee.api.model.EmployeeCategory;
 import com.example.Employee.api.service.EmployeeService;
 
-
 @RestController
 public class EmployeeController {
 
-    @Autowired // permet d'appeler les méthodes en du service pour comm avec la bdd// (getEmployees)
+    @Autowired // permet d'appeler les méthodes en du service pour comm avec la bdd//
+               // (getEmployees)
     private EmployeeService employeeService;
 
     /**
@@ -35,14 +36,25 @@ public class EmployeeController {
         return employeeService.getEmployees();
     }
 
-    @GetMapping("/employees/{id}")
-    public Optional<Employee> getEmployee(@PathVariable long id){
-        return employeeService.getEmployee(id);
+    @GetMapping("/employees/{uuid}")
+    public ResponseEntity<Employee> getEmployee(@PathVariable UUID uuid) {
+        try {
+            Optional<Employee> employee = employeeService.getEmployee(uuid);
+            if (employee.isPresent()) {
+                return new ResponseEntity<Employee>(employee.get(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Employee>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+            return new ResponseEntity<Employee>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    @DeleteMapping("/employees/{id}")
-    public void deleteEmployee(@PathVariable long id){
-        employeeService.deleteEmployee(id);
+    @DeleteMapping("/employees/{uuid}")
+    public ResponseEntity<Void> deleteEmployee(@PathVariable UUID uuid) {
+        employeeService.deleteEmployee(uuid);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/employees")
@@ -53,19 +65,18 @@ public class EmployeeController {
     @GetMapping("/data") // Cela signifie que les requetes HTTP renverrons la liste de tous les employees
     public ResponseEntity<Employee> loadData() {
         Employee newEmployee = employeeService
-        .saveEmployee(new Employee("Nicolas", "Simon", "test@test.fr", "password", 0, EmployeeCategory.CATEGORYA));
+                .saveEmployee(
+                        new Employee("Nicolas", "Simon", "test@test.fr", "password", 0, EmployeeCategory.CATEGORYA));
         return new ResponseEntity<>(newEmployee, HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("employees/categories")
     public Iterable<Employee> getEmployeesByCategory(EmployeeCategory employeecategory) {
-        return  employeeService.getEmployeesByCategory(employeecategory);
-    }
-    
-    @PutMapping("employees/{id}")
-     public void updateSalary(@PathVariable long id , @RequestParam double salary){
-         employeeService.updateSalary(id, salary);
-            
+        return employeeService.getEmployeesByCategory(employeecategory);
     }
 
+    @PutMapping("employees/{uuid}")
+    public void updateSalary(@PathVariable UUID uuid, @RequestParam double salary) {
+        employeeService.updateSalary(uuid, salary);
+    }
 }
