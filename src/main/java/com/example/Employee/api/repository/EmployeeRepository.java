@@ -13,6 +13,8 @@ public interface EmployeeRepository extends CrudRepository<Employee, Long> {
 
     Optional<Employee> findOneByUuid(UUID uuid);
 
-    void deleteEmployeeByUuid(UUID uuid);
+    Employee deleteEmployeeByUuid(UUID uuid);
+
+    
     
 }

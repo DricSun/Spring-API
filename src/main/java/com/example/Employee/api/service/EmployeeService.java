@@ -40,13 +40,14 @@ public class EmployeeService {
 
         return retour;
     }
+
     
     public Iterable<Employee> getEmployees() {
         return employeeRepository.findAll();
     }
 
-    public void deleteEmployee(final UUID uuid) {
-        employeeRepository.deleteEmployeeByUuid(uuid);
+    public Employee deleteEmployee(UUID uuid) {
+        return employeeRepository.deleteEmployeeByUuid(uuid);
     }
 
     public Employee saveEmployee(Employee employee) {
@@ -57,8 +58,8 @@ public class EmployeeService {
     //s'assurer que les employees d'une catégories n'ont pas un salaire supérieur à un employé d'une catégorie plus élevé 
      public Boolean verifyCoherenceEmployeeSalary(){
         boolean verifD = verifyCoherenceEmployeeSalaryByCategory(EmployeeCategory.CATEGORYD, EmployeeCategory.CATEGORYC);
-        boolean verifC = verifyCoherenceEmployeeSalaryByCategory(EmployeeCategory.CATEGORYC, EmployeeCategory.CATEGROYB);
-        boolean verifB = verifyCoherenceEmployeeSalaryByCategory(EmployeeCategory.CATEGROYB, EmployeeCategory.CATEGORYA);
+        boolean verifC = verifyCoherenceEmployeeSalaryByCategory(EmployeeCategory.CATEGORYC, EmployeeCategory.CATEGORYB);
+        boolean verifB = verifyCoherenceEmployeeSalaryByCategory(EmployeeCategory.CATEGORYB, EmployeeCategory.CATEGORYA);
         return verifD && verifC && verifB;
     }
 
@@ -119,7 +120,7 @@ public class EmployeeService {
         }
 
         //diminution salary
-        variationSalary(employeeCategory, -2);
+        // variationSalary(employeeCategory, -2);
         
     }
 
@@ -138,12 +139,13 @@ public class EmployeeService {
             // mettre a jour l'objet en base 
             employeeRepository.save(employee);
        }else{
-        
+            
        }
         
 
 
     }
+
 
 
 }

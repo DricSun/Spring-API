@@ -25,7 +25,7 @@ public class Employee {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Type(type="org.hibernate.type.UUIDCharType")
+    @Type(type="org.hibernate.type.UUIDCharType") // Change le binaire en string (convertisseur)
     private UUID uuid = UUID.randomUUID();
     
 
